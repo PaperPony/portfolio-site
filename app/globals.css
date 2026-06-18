@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Palette — single source of truth for color.
+ * Tailwind tokens (see tailwind.config.js) reference these variables, so you
+ * can re-tune the whole site from right here.
+ */
+:root {
+  /* Base: near-black + greys */
+  --color-ink: #0a0a0a;
+  --color-coal: #141414;
+  --color-slate: #1f1f22;
+  --color-ash: #9aa0a6;
+  --color-bone: #f5f5f7;
+
+  /* Neon "spray paint" accents */
+  --color-magenta: #ff2d95;
+  --color-purple: #9d4edd;
+  --color-cobalt: #3a86ff;
+  --color-ember: #ff5e1a;
+  --color-lime: #aaff00;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-sans);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Respect users who prefer less motion: kill smooth scroll + long transitions. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Utility: subtle neon text glow used on accents. */
+.text-glow {
+  text-shadow: 0 0 24px currentColor;
+}
+
+/* A faint grid backdrop reminiscent of retro-futuristic UIs. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
