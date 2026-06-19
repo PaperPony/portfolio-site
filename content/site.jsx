@@ -2,10 +2,10 @@
 export const site = {
   name: "Dominick Varano",
   // Personal "face-brand" — no agency name for now.
-  role: "Web · App · AI-System Development",
-  tagline: "I build web, app, and AI systems.",
+  role: "Web · Mobile · AI",
+  tagline: "I build full-stack apps and AI systems.",
   intro:
-    "Independent developer helping teams ship fast, polished products — from marketing sites to full applications to AI-powered systems.",
+    "Independent developer helping business owners build quality applications",
   email: "varano.dominick@gmail.com",
   domain: "dominickvarano.io",
   url: "https://dominickvarano.io",

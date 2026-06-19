@@ -3,7 +3,7 @@
 export const about = {
   portrait: "/portrait.svg",
   portraitAlt: "Portrait of Dominick Varano",
-  heading: "Hi, I'm Dominick.",
+  heading: "Welcome to the future",
   paragraphs: [
     "I'm an independent developer who builds web apps, mobile apps, and AI-powered systems. I like taking an idea from a rough sketch to something people actually enjoy using.",
     "I work end-to-end — design, frontend, backend, and the messy integration in between — and I care about the details that make software feel fast and alive.",
