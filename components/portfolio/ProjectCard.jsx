@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
+import ScrambleText from "@/components/ui/ScrambleText";
 
 const ACCENT = {
   magenta: "#ff2d95",
@@ -35,19 +36,24 @@ export default function ProjectCard({ project }) {
       </div>
 
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="text-xl font-semibold text-bone">{project.title}</h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-ash">
-          {project.blurb}
-        </p>
+        <ScrambleText
+          as="h3"
+          text={project.title}
+          className="block text-xl font-semibold text-bone"
+        />
+        <ScrambleText
+          as="p"
+          text={project.blurb}
+          className="mt-2 block flex-1 text-sm leading-relaxed text-ash"
+        />
 
         <div className="mt-4 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
-            <span
+            <ScrambleText
               key={tag}
+              text={tag}
               className="rounded-full border border-white/10 px-2.5 py-1 text-[11px] font-medium text-ash"
-            >
-              {tag}
-            </span>
+            />
           ))}
         </div>
 
@@ -60,7 +66,7 @@ export default function ProjectCard({ project }) {
                 className="text-sm font-medium transition hover:brightness-125"
                 style={{ color }}
               >
-                {link.label} →
+                <ScrambleText text={link.label} /> →
               </a>
             ))}
           </div>

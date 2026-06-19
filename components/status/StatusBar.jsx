@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { getCurrentStatus } from "@/lib/status";
 
 // Map accent keys to the neon palette (Tailwind can't build dynamic class names).

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 // Small helper: fade + rise into view when scrolled to. Respects reduced motion
 // automatically (framer-motion honors the OS setting for `whileInView`).

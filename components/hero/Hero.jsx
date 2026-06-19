@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import AuroraCanvas from "@/components/three/AuroraCanvas";
 import { site } from "@/content/site";
 

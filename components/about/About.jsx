@@ -1,5 +1,6 @@
 import { about } from "@/content/about";
 import Reveal from "@/components/ui/Reveal";
+import ScrambleText from "@/components/ui/ScrambleText";
 
 export default function About() {
   return (
@@ -22,15 +23,19 @@ export default function About() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <p className="text-sm font-medium uppercase tracking-[0.3em] text-neon-purple">
-            About
-          </p>
-          <h2 className="mt-3 text-4xl font-bold tracking-tight text-bone sm:text-5xl">
-            {about.heading}
-          </h2>
+          <ScrambleText
+            as="p"
+            text="About"
+            className="block text-sm font-medium uppercase tracking-[0.3em] text-neon-purple"
+          />
+          <ScrambleText
+            as="h2"
+            text={about.heading}
+            className="mt-3 block text-4xl font-bold tracking-tight text-bone sm:text-5xl"
+          />
           <div className="mt-6 space-y-4 text-base leading-relaxed text-ash">
             {about.paragraphs.map((p, i) => (
-              <p key={i}>{p}</p>
+              <ScrambleText key={i} as="p" text={p} className="block" />
             ))}
           </div>
 
@@ -40,8 +45,14 @@ export default function About() {
                 key={h.label}
                 className="rounded-xl border border-white/10 bg-ink/60 p-4"
               >
-                <div className="text-sm font-semibold text-bone">{h.label}</div>
-                <div className="mt-1 text-xs text-ash">{h.detail}</div>
+                <ScrambleText
+                  text={h.label}
+                  className="block text-sm font-semibold text-bone"
+                />
+                <ScrambleText
+                  text={h.detail}
+                  className="mt-1 block text-xs text-ash"
+                />
               </li>
             ))}
           </ul>
