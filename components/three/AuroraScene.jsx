@@ -1,8 +1,12 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+
+// The aurora drifts slowly and is viewed through a heavy blur, so a low,
+// capped framerate is imperceptible — and halves GPU load versus 60fps.
+const TARGET_FPS = 30;
 
 /*
  * Aurora backdrop.
@@ -22,8 +26,8 @@ export const DEFAULTS = {
   intensity: 1.35, // overall brightness multiplier
   bandLow: 0.04, // bottom of the aurora band (0 = screen bottom)
   bandHigh: 0.95, // top of the aurora band (1 = screen top)
-  startDelay: 0.15, // seconds of black before the aurora begins to bloom
-  revealDuration: 7.0, // seconds for the bloom to fill the screen
+  startDelay: 0.0, // seconds of black before the aurora begins to bloom
+  revealDuration: 4.0, // seconds for the bloom to fill the screen
   // Neon palette (kept in sync with the CSS/Tailwind tokens).
   // Order matters: low→high it reads lime → cobalt → purple → magenta, with
   // ember reserved as a rare warm flare.
@@ -209,9 +213,12 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-function Aurora({ config, reducedMotion }) {
+function Aurora({ config, reducedMotion, active }) {
   const matRef = useRef();
-  const { size, viewport } = useThree();
+  const { size, viewport, invalidate } = useThree();
+  // Wall-clock start, so animation time is continuous across pause/resume and
+  // doesn't depend on R3F's clock (which stalls between on-demand renders).
+  const startRef = useRef(null);
 
   const material = useMemo(() => {
     const c = config.colors.map((hex) => new THREE.Color(hex));
@@ -238,19 +245,22 @@ function Aurora({ config, reducedMotion }) {
     });
   }, [config]);
 
-  // Keep the resolution uniform in sync (drives aspect correction).
   const dpr = viewport.dpr || 1;
-  material.uniforms.uResolution.value.set(size.width * dpr, size.height * dpr);
 
-  useFrame(({ clock }) => {
+  // Uniform updates run on every rendered frame (driven on-demand below).
+  useFrame(() => {
     const u = material.uniforms;
+    // Keep the resolution uniform in sync (drives aspect correction).
+    u.uResolution.value.set(size.width * dpr, size.height * dpr);
+
     if (reducedMotion) {
       // No motion, no bloom — show the settled aurora immediately.
       u.uTime.value = config.reducedTime;
       u.uReveal.value = 1;
       return;
     }
-    const elapsed = clock.elapsedTime;
+    if (startRef.current === null) startRef.current = performance.now();
+    const elapsed = (performance.now() - startRef.current) / 1000;
     u.uTime.value = elapsed * config.speed;
     // Ease the bloom in over real seconds (independent of animation speed).
     const p = Math.min(
@@ -260,6 +270,32 @@ function Aurora({ config, reducedMotion }) {
     u.uReveal.value = p * p * (3 - 2 * p); // smoothstep ease
   });
 
+  // Render driver. The Canvas is in `demand` mode, so nothing renders unless we
+  // ask it to. This single loop does two jobs that together fix the global
+  // stutter: (1) it only runs while the hero is on-screen (`active`), so we burn
+  // zero GPU once the user scrolls past; (2) it throttles to TARGET_FPS so we
+  // never pay for frames the slow, blurred aurora doesn't need.
+  useEffect(() => {
+    if (reducedMotion) {
+      invalidate(); // paint the settled frame once, then stay idle
+      return;
+    }
+    if (!active) return;
+
+    let raf;
+    let last = 0;
+    const interval = 1000 / TARGET_FPS;
+    const loop = (now) => {
+      raf = requestAnimationFrame(loop);
+      if (now - last >= interval) {
+        last = now;
+        invalidate();
+      }
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [active, reducedMotion, invalidate]);
+
   return (
     <mesh frustumCulled={false}>
       <planeGeometry args={[2, 2]} />
@@ -268,17 +304,27 @@ function Aurora({ config, reducedMotion }) {
   );
 }
 
-export default function AuroraScene({ reducedMotion = false, ...overrides }) {
+export default function AuroraScene({
+  reducedMotion = false,
+  active = true,
+  ...overrides
+}) {
   const config = useMemo(() => ({ ...DEFAULTS, ...overrides }), [overrides]);
 
   return (
     <Canvas
       className="!absolute inset-0"
-      gl={{ antialias: true, alpha: true }}
-      dpr={[1, 2]}
+      // Render only when we explicitly ask (see the driver in <Aurora/>), never
+      // on a free-running rAF loop.
+      frameloop="demand"
+      // A fullscreen quad has no geometry edges, so MSAA is wasted work. And the
+      // 16px liquid-glass blur destroys any sub-pixel detail, so rendering above
+      // dpr 1 pays 4× on retina for sharpness the user can never see.
+      gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+      dpr={1}
       // No camera work needed — the quad is drawn directly in clip space.
     >
-      <Aurora config={config} reducedMotion={reducedMotion} />
+      <Aurora config={config} reducedMotion={reducedMotion} active={active} />
     </Canvas>
   );
 }
