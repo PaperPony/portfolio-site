@@ -23,7 +23,7 @@ app/                     # App Router entry (layout, page, global styles)
   page.jsx               # composes the page sections
   globals.css            # Tailwind + the color tokens (CSS variables)
 components/
-  hero/                  # Hero section + GPU paint-splatter scene
+  hero/                  # Hero section + liquid-glass panel
   status/                # "What I'm doing right now" status bar
   portfolio/             # Project grid + cards
   about/                 # About + portrait
@@ -84,15 +84,20 @@ exposed to Tailwind as tokens in **`tailwind.config.js`** (e.g. `bg-ink`,
 `text-neon-magenta`). Change a hex in `globals.css` and it updates site-wide.
 
 The 3D scene reads the same hex values from its own `DEFAULTS.colors` array in
-`components/three/PaintSplatScene.jsx` — keep those in sync if you re-theme.
+`components/three/AuroraScene.jsx` — keep those in sync if you re-theme.
 
 ## The hero animation
 
-`components/three/PaintSplatScene.jsx` is the GPU paint-splatter: ~1s of dark
-screen, then neon buckets of paint burst outward and settle. Every knob
-(`startDelay`, `splatCount`, `dropletsPerSplat`, `burstForce`, `colors`, etc.)
-lives in `DEFAULTS` and is overridable via props on `<PaintSplatCanvas />`. It
-respects `prefers-reduced-motion` (renders the settled frame, skips the burst).
+`components/three/AuroraScene.jsx` is a GPU aurora: a full-screen shader that
+domain-warps fractal noise over time to paint flowing, constantly shifting
+curtains of neon light, ramped through the site palette. Every knob (`speed`,
+`scale`, `warp`, `intensity`, `colors`, etc.) lives in `DEFAULTS` and is
+overridable via props on `<AuroraCanvas />`. It respects
+`prefers-reduced-motion` (renders a single static frame, no motion).
+
+The hero copy sits inside a `.liquid-glass` panel (see `app/globals.css`) — an
+iOS-style frosted-glass pane that blurs and refracts the aurora behind it so
+text stays legible while the color still reads through.
 
 > **TODO:** additional 3D animations will be added as separate scene components
 > under `components/three/`.

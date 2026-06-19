@@ -58,6 +58,24 @@ body {
   text-shadow: 0 0 24px currentColor;
 }
 
+/*
+ * "Liquid glass" — a full-bleed translucent pane the whole aurora is viewed
+ * through (iOS-style). Just a soft blur and a faint tint/saturation lift: no
+ * border, no drop shadow, nothing that would read as a floating card/modal.
+ * Stays translucent so the color still comes through clearly.
+ */
+.liquid-glass {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.01) 45%,
+      rgba(10, 10, 10, 0.08)
+    );
+  backdrop-filter: blur(16px) saturate(135%);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+}
+
 /* A faint grid backdrop reminiscent of retro-futuristic UIs. */
 .bg-grid {
   background-image:
