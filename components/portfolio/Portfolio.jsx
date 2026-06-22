@@ -1,7 +1,6 @@
-import { projects } from "@/content/projects";
 import Reveal from "@/components/ui/Reveal";
 import ScrambleText from "@/components/ui/ScrambleText";
-import ProjectCard from "@/components/portfolio/ProjectCard";
+import ProjectCarousel from "@/components/portfolio/ProjectCarousel";
 
 export default function Portfolio() {
   return (
@@ -23,13 +22,7 @@ export default function Portfolio() {
           />
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
-          {projects.map((project, i) => (
-            <Reveal key={project.title} delay={i * 0.05}>
-              <ProjectCard project={project} />
-            </Reveal>
-          ))}
-        </div>
+        <ProjectCarousel />
       </div>
     </section>
   );
