@@ -159,10 +159,14 @@ export default function ProjectCarousel() {
   };
 
   // Wheel surfs the planes; once we hit a bound, stop capturing so the page
-  // scrolls normally instead of trapping the user in the section.
+  // scrolls normally instead of trapping the user in the section. We listen on
+  // the whole section (not just the plane area) so the user surfs the projects
+  // regardless of where their cursor sits — no more accidentally scrolling past
+  // the carousel because the pointer was over the heading or section padding.
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+    const container = containerRef.current;
+    if (!container) return;
+    const el = container.closest("section") ?? container;
     const onWheel = (e) => {
       const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
       const cur = rawScrollX.get();
