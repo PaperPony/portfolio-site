@@ -40,6 +40,13 @@ export default function StatusBar() {
             style={{ backgroundColor: color }}
           />
         </span>
+        <span
+          className="shrink-0 text-xs font-semibold"
+          style={{ color }}
+        >
+          Status
+        </span>
+        <span className="self-stretch w-px shrink-0 bg-white/10" />
         <AnimatePresence mode="wait">
           <motion.div
             key={status ? status.label + status.detail : "loading"}
