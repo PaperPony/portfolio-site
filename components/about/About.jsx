@@ -7,14 +7,15 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative border-t border-white/10 bg-coal px-6 py-24 sm:py-32"
+      className="relative border-t border-white/10 bg-coal px-6 py-20 sm:py-24"
     >
-      {/* items-start (not items-center): the portrait is pinned to the row top
-          so scramble-driven text reflow can't re-center and jitter it. */}
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 md:grid-cols-2 md:gap-16">
-        {/* Portrait — monochrome until hovered, then it warps into colour. */}
+      {/* items-center balances the columns. Safe now that the text uses
+          reserveSpace (its box no longer reflows during scramble) and the
+          portrait reveal is scroll- rather than cursor-driven. */}
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">
+        {/* Portrait — monochrome until scrolled into view, then it warps into colour. */}
         <Reveal className="order-1 md:order-none">
-          <div className="relative mx-auto w-full max-w-sm">
+          <div className="relative mx-auto w-full max-w-md">
             <PortraitReveal
               src={about.portrait}
               alt={about.portraitAlt}

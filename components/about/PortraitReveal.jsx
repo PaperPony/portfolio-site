@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, animate } from "motion/react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+import { useScrollTriggerActive } from "@/lib/useScrollTriggerActive";
 
 // Radial mask that "ripples" the colour layer in from the top-right, echoing
 // the sweep in Motion's Apple Intelligence example (motion.dev/examples/
@@ -19,87 +20,28 @@ const SHIMMER_FROM =
 const SHIMMER_TO =
   "radial-gradient(ellipse 320% 100% at 100% 30%, transparent 0%, #000 300%, transparent 300%)";
 
-// Downscaled resolution for cursor alpha hit-testing — enough to tell the
-// figure from its transparent cut-out, cheap to sample on every move.
-const SAMPLE_W = 220;
-const ALPHA_THRESHOLD = 12;
-
 const EASE = [0.22, 1, 0.36, 1];
 
 /**
- * Portrait that lives in monochrome until the cursor crosses the *visible*
- * figure (not the transparent cut-out around it), then ripples into colour.
+ * Portrait that lives in monochrome until it's scrolled into view (reading down
+ * the page), then ripples into colour — the same scroll trigger that drives the
+ * scramble text, via useScrollTriggerActive. Scrolling back up past it drains
+ * the colour again, so a later downward pass replays the reveal.
  *
  * The reveal is adapted from Motion's "Apple Intelligence" example: the colour
  * layer is unmasked via an animated radial sweep, and a tinted, colour-dodge
- * clone flashes across once on enter. Cursor hit-testing samples a downscaled
- * alpha map of the PNG so transparent pixels never trigger the effect.
+ * clone flashes across once on enter.
  */
 export default function PortraitReveal({ src, alt, className = "" }) {
   const reducedMotion = useReducedMotion();
-  const [hovered, setHovered] = useState(false);
+  const [ref, active] = useScrollTriggerActive({ amount: 0.4 });
 
-  const containerRef = useRef(null);
   const colorRef = useRef(null);
   const shimmerRef = useRef(null);
-
-  // Alpha map for hit-testing: { data, w, h, naturalW, naturalH }.
-  const alphaRef = useRef(null);
-  const overRef = useRef(false);
   const colorAnimRef = useRef(null);
-
-  // Build a small alpha map once the image has decoded.
-  useEffect(() => {
-    let cancelled = false;
-    const img = new window.Image();
-    img.crossOrigin = "anonymous";
-    img.src = src;
-    img.onload = () => {
-      if (cancelled || !img.naturalWidth) return;
-      const w = Math.min(SAMPLE_W, img.naturalWidth);
-      const h = Math.max(1, Math.round((w * img.naturalHeight) / img.naturalWidth));
-      const canvas = document.createElement("canvas");
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, w, h);
-      try {
-        const { data } = ctx.getImageData(0, 0, w, h);
-        alphaRef.current = { data, w, h, naturalW: img.naturalWidth, naturalH: img.naturalHeight };
-      } catch {
-        alphaRef.current = null; // tainted canvas — fall back to box hover
-      }
-    };
-    return () => {
-      cancelled = true;
-    };
-  }, [src]);
-
-  // Is the cursor over a non-transparent pixel of the figure? Mirrors the
-  // image's `object-contain object-bottom` layout to map screen -> source px.
-  const isOverFigure = (clientX, clientY) => {
-    const el = containerRef.current;
-    if (!el) return false;
-    const rect = el.getBoundingClientRect();
-    const map = alphaRef.current;
-    if (!map) {
-      return (
-        clientX >= rect.left &&
-        clientX <= rect.right &&
-        clientY >= rect.top &&
-        clientY <= rect.bottom
-      );
-    }
-    const scale = Math.min(rect.width / map.naturalW, rect.height / map.naturalH);
-    const dW = map.naturalW * scale;
-    const dH = map.naturalH * scale;
-    const px = clientX - rect.left - (rect.width - dW) / 2; // object-position x: 50%
-    const py = clientY - rect.top - (rect.height - dH); // object-bottom: y 100%
-    if (px < 0 || py < 0 || px > dW || py > dH) return false;
-    const sx = Math.min(map.w - 1, Math.floor((px / dW) * map.w));
-    const sy = Math.min(map.h - 1, Math.floor((py / dH) * map.h));
-    return map.data[(sy * map.w + sx) * 4 + 3] > ALPHA_THRESHOLD;
-  };
+  // Skip the drain on first mount: the colour layer already starts hidden, so
+  // there's nothing to drain until it has actually been revealed once.
+  const revealedOnce = useRef(false);
 
   const revealColor = () => {
     const el = colorRef.current;
@@ -150,34 +92,25 @@ export default function PortraitReveal({ src, alt, className = "" }) {
     );
   };
 
-  const setOver = (over) => {
-    if (over === overRef.current) return;
-    overRef.current = over;
-    setHovered(over);
-    if (over) {
+  useEffect(() => {
+    if (active) {
+      revealedOnce.current = true;
       revealColor();
       shimmer();
-    } else {
+    } else if (revealedOnce.current) {
       drainColor();
     }
-  };
-
-  const onMove = (e) => setOver(isOverFigure(e.clientX, e.clientY));
-  const onLeave = () => setOver(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
 
   return (
-    <div
-      ref={containerRef}
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-      className={`relative ${className}`}
-    >
-      {/* Neon bloom that swells behind the figure on hover. */}
+    <motion.div ref={ref} className={`relative ${className}`}>
+      {/* Neon bloom that swells behind the figure on reveal. */}
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -inset-6 rounded-[42%] bg-gradient-to-tr from-neon-magenta/40 via-neon-purple/30 to-neon-cobalt/40 blur-3xl"
         initial={false}
-        animate={{ scale: hovered ? 1.12 : 0.88, opacity: hovered ? 0.9 : 0.3 }}
+        animate={{ scale: active ? 1.12 : 0.88, opacity: active ? 0.9 : 0.3 }}
         transition={{ duration: 0.6, ease: EASE }}
       />
 
@@ -189,7 +122,7 @@ export default function PortraitReveal({ src, alt, className = "" }) {
         className="absolute inset-0 h-full w-full select-none object-contain object-bottom [filter:grayscale(1)_contrast(1.03)]"
       />
 
-      {/* Colour layer — ripples in via an animated radial mask while hovered. */}
+      {/* Colour layer — ripples in via an animated radial mask while in view. */}
       <img
         ref={colorRef}
         src={src}
@@ -215,6 +148,6 @@ export default function PortraitReveal({ src, alt, className = "" }) {
         }}
         className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom"
       />
-    </div>
+    </motion.div>
   );
 }
