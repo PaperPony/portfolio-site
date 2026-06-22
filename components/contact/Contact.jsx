@@ -14,12 +14,12 @@ export default function Contact() {
       <Reveal className="relative mx-auto max-w-2xl text-center">
         <ScrambleText
           as="h2"
-          text="Need a software solution?"
+          text="Want to build something?"
           className="mt-3 block text-4xl font-bold tracking-tight text-bone sm:text-6xl"
         />
         <ScrambleText
           as="p"
-          text="I'm taking on a small number of consulting clients. Tell me what you're building and let's see if we're a fit."
+          text="Shoot me an email and let's see if we're a fit."
           className="mx-auto mt-5 block max-w-xl text-lg text-ash"
         />
 

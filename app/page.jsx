@@ -9,13 +9,13 @@ export default function Home() {
       {/* 1. Hero with the GPU paint-splatter scene. */}
       <Hero />
 
+      {/* 2. About + portrait. */}
+      <About />
+
       {/* 3. Portfolio. */}
       <Portfolio />
 
-      {/* 4. About + portrait. */}
-      <About />
-
-      {/* 5. Contact. */}
+      {/* 4. Contact. */}
       <Contact />
     </main>
   );
