@@ -8,7 +8,7 @@ export const projects = [
       "An AI interior decorator app. Snap a photo of any room, pick a style, and Decorz redesigns the space with a list of real, shoppable products. Live on the App Store for iOS devices.",
     tags: ["SwiftUI", "Flask", "Gemini AI", "Google Cloud"],
     accent: "ember",
-    image: "/projects/decorz.png",
+    image: "/projects/decorz.webp",
     links: [
       {
         label: "App Store",
@@ -22,7 +22,7 @@ export const projects = [
       "This website! Not much else to say other than that!",
     tags: ["Next.js", "React Three Fiber", "Motion", "Tailwind", "Vercel"],
     accent: "magenta",
-    image: "/projects/portfolio-site.png",
+    image: "/projects/portfolio-site.webp",
     links: [{ label: "You're looking at it", href: "/" }],
   },
   {
@@ -31,7 +31,7 @@ export const projects = [
       "A shared lunch planner for families, currently in development. Parents create or join a family and use a real-time calendar to coordinate meal packing for their  kids. Snap a photo and an AI scanner auto-fills the items.",
     tags: ["Swift", "Firebase", "OpenAI"],
     accent: "purple",
-    image: "/projects/lunchbox.png",
+    image: "/projects/lunchbox.webp",
     links: [],
   },
   {
@@ -40,7 +40,7 @@ export const projects = [
       "A SaaS platform to helps creators, writers, and small businesses optimize thier content for AI searches.",
     tags: ["Next.js", "AWS", "Cohere", "Stripe", "Vercel"],
     accent: "cobalt",
-    image: "/projects/solidifai.png",
+    image: "/projects/solidifai.webp",
     links: [],
   },
 ];
