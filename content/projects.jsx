@@ -3,40 +3,45 @@
 // TODO: replace placeholders with real projects + images in /public/projects.
 export const projects = [
   {
-    title: "Atlas Dashboard",
+    title: "Decorz",
     blurb:
-      "Real-time analytics dashboard for a logistics startup. Sub-second data streaming and a fully custom charting layer.",
-    tags: ["Next.js", "WebSockets", "D3"],
-    accent: "cobalt",
-    image: "/projects/placeholder-1.svg",
-    links: [{ label: "Case study", href: "#" }],
-  },
-  {
-    title: "Verse AI Assistant",
-    blurb:
-      "Retrieval-augmented support assistant that cut a client's ticket volume by 40%. Built on a tuned LLM pipeline.",
-    tags: ["AI", "RAG", "Python"],
-    accent: "magenta",
-    image: "/projects/placeholder-2.svg",
-    links: [{ label: "Overview", href: "#" }],
-  },
-  {
-    title: "Tempo Mobile",
-    blurb:
-      "Cross-platform habit-tracking app with offline-first sync and a playful, gesture-driven interface.",
-    tags: ["React Native", "Expo", "SQLite"],
-    accent: "lime",
-    image: "/projects/placeholder-3.svg",
-    links: [{ label: "App store", href: "#" }],
-  },
-  {
-    title: "Prism Commerce",
-    blurb:
-      "Headless storefront with a custom checkout and a content pipeline that lets non-devs ship landing pages.",
-    tags: ["Next.js", "Stripe", "Headless CMS"],
+      "An AI interior decorator app. Snap a photo of any room, pick a style, and Decorz redesigns the space with a list of real, shoppable products. Live on the App Store for iOS devices.",
+    tags: ["SwiftUI", "Flask", "Gemini AI", "Google Cloud"],
     accent: "ember",
-    image: "/projects/placeholder-4.svg",
-    links: [{ label: "Visit site", href: "#" }],
+    image: "/projects/decorz.png",
+    links: [
+      {
+        label: "App Store",
+        href: "https://apps.apple.com/us/app/decorz-ai-room-designer/id6760203110",
+      },
+    ],
+  },
+  {
+    title: "dominickvarano.io",
+    blurb:
+      "This website! Not much else to say other than that!",
+    tags: ["Next.js", "React Three Fiber", "Motion", "Tailwind", "Vercel"],
+    accent: "magenta",
+    image: "/projects/portfolio-site.png",
+    links: [{ label: "You're looking at it", href: "/" }],
+  },
+  {
+    title: "Lunchbox",
+    blurb:
+      "A shared lunch planner for families, currently in development. Parents create or join a family and use a real-time calendar to coordinate meal packing for their  kids. Snap a photo and an AI scanner auto-fills the items.",
+    tags: ["Swift", "Firebase", "OpenAI"],
+    accent: "purple",
+    image: "/projects/lunchbox.png",
+    links: [],
+  },
+  {
+    title: "Solidif.ai",
+    blurb:
+      "A SaaS platform to helps creators, writers, and small businesses optimize thier content for AI searches.",
+    tags: ["Next.js", "AWS", "Cohere", "Stripe", "Vercel"],
+    accent: "cobalt",
+    image: "/projects/solidifai.png",
+    links: [],
   },
 ];
 

@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#141414"/>
-  <circle cx="620" cy="120" r="160" fill="#ff5e1a" opacity="0.2"/>
-  <text x="48" y="270" font-family="system-ui, sans-serif" font-weight="700" font-size="48" fill="#f5f5f7">Prism</text>
-  <text x="48" y="320" font-family="system-ui, sans-serif" font-size="24" fill="#9aa0a6">project image placeholder</text>
-</svg>

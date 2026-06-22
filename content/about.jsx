@@ -1,18 +1,16 @@
 // About section content.
-// TODO: swap the placeholder portrait for a real photo at /public/portrait.svg (or .jpg).
 export const about = {
   portrait: "/portrait.svg",
   portraitAlt: "Portrait of Dominick Varano",
   heading: "Welcome to the future",
   paragraphs: [
-    "I'm an independent developer who builds web apps, mobile apps, and AI-powered systems. I like taking an idea from a rough sketch to something people actually enjoy using.",
-    "I work end-to-end — design, frontend, backend, and the messy integration in between — and I care about the details that make software feel fast and alive.",
-    "Right now I'm taking on a small number of consulting clients. If you're building something ambitious, let's talk.",
+    "I'm a full-stack developer who builds web apps, mobile apps, and AI-powered systems.",
+    "Right now, I'm taking on a small number of consulting clients. If you want to build something, let's talk.",
   ],
   highlights: [
-    { label: "Web", detail: "Next.js, React, modern frontends" },
-    { label: "Apps", detail: "Cross-platform mobile & desktop" },
-    { label: "AI", detail: "LLM pipelines, RAG, automation" },
+    { label: "Technologies", detail: "Next.js, React, Firebase, AWS, Docker" },
+    { label: "Languages", detail: "JavaScript, Python, C++, C, Swift, Bash" },
+    { label: "AI", detail: "LLM pipelines, agentic systems, automations" },
   ],
 };
 

@@ -29,7 +29,7 @@ export const statusSchedule = {
   },
   rules: [
     // --- Day-specific events (checked first; they override the daily blocks) ---
-    { days: MON, from: 11, to: 12.25, label: "Coaching Call", detail: "Weekly 1:1", accent: "magenta" },
+    { days: MON, from: 11, to: 12.25, label: "Coaching Call", detail: "Weekly Mindset Training", accent: "magenta" },
     { days: MON, from: 19, to: 21, label: "Group Study", detail: "", accent: "purple" },
     { days: WED, from: 19, to: 21, label: "Friends Night", detail: "Weekly meetup", accent: "lime" },
     { days: THU, from: 18.5, to: 21.5, label: "Best Friend", detail: "Catching up", accent: "ember" },
