@@ -22,10 +22,10 @@ import { useReducedMotion } from "@/lib/useReducedMotion";
 // Neon palette, kept in sync with the aurora shader / Tailwind tokens.
 const COLORS = ["#aaff00", "#3a86ff", "#9d4edd", "#ff2d95", "#ff5e1a"];
 
-const BLOB_SIZE = 210; // diameter of each puff before blur (px)
+const BLOB_SIZE = 140; // diameter of each puff before blur (px)
 const SPAWN_DISTANCE = 80; // cursor travel between spawns (px)
 const FADE_DURATION = 1.5; // seconds a puff lingers before removal
-const PEAK_OPACITY = 0.3; // faint, but visible against the dark page
+const PEAK_OPACITY = 0.42; // faint, but visible against the dark page
 
 export default function CursorTrail() {
   const reducedMotion = useReducedMotion();
