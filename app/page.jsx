@@ -1,8 +1,11 @@
-import { Hero, StatusBar, Portfolio, About, Contact } from "@/components";
+import { Hero, StatusBar, Portfolio, About, Contact, CursorTrail } from "@/components";
 
 export default function Home() {
   return (
     <main className="relative">
+      {/* Faint aurora cursor trail over the whole page. */}
+      <CursorTrail />
+
       {/* Persistent "what I'm doing right now" indicator. */}
       <StatusBar />
 
