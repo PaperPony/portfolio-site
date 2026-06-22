@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import Reveal from "@/components/ui/Reveal";
 import ScrambleText from "@/components/ui/ScrambleText";
+import ContactOrbit from "@/components/contact/ContactOrbit";
 
 export default function Contact() {
   return (
@@ -10,6 +11,9 @@ export default function Contact() {
     >
       {/* Soft neon glow behind the CTA. */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-magenta/15 blur-[120px]" />
+
+      {/* Idle glyphs orbiting clockwise along two side arcs (parentheses). */}
+      <ContactOrbit />
 
       <Reveal className="relative mx-auto max-w-2xl text-center">
         <ScrambleText
