@@ -23,7 +23,7 @@ export default function Contact() {
         />
         <ScrambleText
           as="p"
-          text="Shoot me an email and let's see if we're a fit."
+          text="Shoot me an email and let's plan a call."
           className="mx-auto mt-5 block max-w-xl text-lg text-ash"
         />
 

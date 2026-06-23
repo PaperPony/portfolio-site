@@ -1,6 +1,6 @@
 // About section content.
 export const about = {
-  portrait: "/portrait.svg",
+  portrait: "/portrait.webp",
   portraitAlt: "Portrait of Dominick Varano",
   heading: "Welcome to the future",
   paragraphs: [
