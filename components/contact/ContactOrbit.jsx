@@ -12,14 +12,12 @@ import { useReducedMotion } from "@/lib/useReducedMotion";
  * one edge and out to the other via a sin(πp) envelope so they vanish exactly at
  * the arc ends, then respawn at the entry edge with a fresh glyph + theme colour.
  *
- * Continual but not interactive; faint but legible. Canvas + one rAF loop, gated
- * to wide screens (no room beside the text otherwise) and paused off-screen.
+ * Canvas + one rAF loop, gated to wide screens and paused off-screen.
  */
 
 // Theme palette — same tokens as the statuses / projects / aurora.
 const COLORS = ["#aaff00", "#3a86ff", "#9d4edd", "#ff2d95", "#ff5e1a"];
 
-// Geometric glyphs read best as drifting motes; heavier block glyphs are skipped.
 const GLYPHS = "◆◇◈◊●○✦✧▪▫".split("");
 
 const D2R = Math.PI / 180;
@@ -32,7 +30,7 @@ const ARCS = [
 ];
 
 const PER_ARC = 24; // glyphs riding each arc, staggered along it
-const PEAK_OPACITY = 0.5; // mid-arc brightness — present but not distracting
+const PEAK_OPACITY = 0.5; // mid-arc brightness
 
 const rand = (a, b) => a + Math.random() * (b - a);
 const pick = (arr) => arr[(Math.random() * arr.length) | 0];
@@ -60,12 +58,11 @@ export default function ContactOrbit() {
       // Each glyph is its own traveller: its own pace, its own radial "lane",
       // its own entry/exit angles, and its own life window along the path.
       // It fades in somewhere in the first half of the arc and out somewhere in
-      // the second half (envelope is keyed to pStart→pEnd, so no popping), so at
-      // any moment something is appearing or vanishing somewhere on the path.
-      g.pStart = rand(0, 0.5); // spawn point — first half of the path
-      g.pEnd = rand(0.5, 1); // despawn point — second half of the path
+      // the second half (envelope is keyed to pStart→pEnd).
+      g.pStart = rand(0, 0.5); // spawn point
+      g.pEnd = rand(0.5, 1); // despawn point
       g.p = g.pStart;
-      g.speed = rand(0.03, 0.085); // progress / second → ~12–33s per traversal
+      g.speed = rand(0.03, 0.085); // progress/second → ~12–33s per traversal
       g.rOffset = rand(-40, 40); // radial lane: how far off the central path
       g.aStart = rand(-13, 13) * D2R; // jitter the entry angle
       g.aEnd = rand(-13, 13) * D2R; // and the exit angle, independently

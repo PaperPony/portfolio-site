@@ -2,8 +2,7 @@
 
 import { motion } from "motion/react";
 
-// Small helper: fade + rise into view when scrolled to. Respects reduced motion
-// automatically (framer-motion honors the OS setting for `whileInView`).
+// Small helper: fade + rise into view when scrolled to
 export default function Reveal({ children, delay = 0, className = "" }) {
   return (
     <motion.div

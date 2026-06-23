@@ -28,7 +28,7 @@ export default function Hero() {
       {/* Soft vignette to anchor the aurora into the dark page edges. */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/30 via-transparent to-ink" />
 
-      {/* Gentle central darkening for text legibility — a soft glow, not a card. */}
+      {/* Gentle central darkening for text legibility. */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(10,10,10,0.55),transparent_75%)]" />
 
       <motion.div

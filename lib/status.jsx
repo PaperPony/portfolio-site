@@ -1,6 +1,4 @@
-// Pure status resolver. Given a Date, returns the matching status from the
-// schedule. No side effects, no `new Date()` inside — caller passes the date,
-// which keeps this trivially unit-testable. See lib/status.test.jsx.
+// Status resolver
 import { statusSchedule } from "../content/statuses.jsx";
 
 /**

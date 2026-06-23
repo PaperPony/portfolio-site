@@ -16,13 +16,7 @@ import { projects } from "@/content/projects";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import ProjectCard from "@/components/portfolio/ProjectCard";
 
-// Adapted from Motion's "scroll velocity: 3D planes" example
-// (motion.dev/examples/react-scroll-velocity-linked-offset). The heart — a
-// perspective ribbon of planes that you surf with drag/wheel, plus a velocity-
-// linked wave — is preserved. Differences for this site: a fixed set of real
-// projects (no infinite wrap; the surf is bounded and releases to page scroll
-// at the ends), and clicking a plane opens a spotlight card with the full
-// description, tags, and link.
+// Adapted from Motion's "scroll velocity: 3D planes" example (motion.dev/examples/react-scroll-velocity-linked-offset).
 
 const ACCENT = {
   magenta: "#ff2d95",
@@ -158,11 +152,7 @@ export default function ProjectCarousel() {
     return next;
   };
 
-  // Wheel surfs the planes; once we hit a bound, stop capturing so the page
-  // scrolls normally instead of trapping the user in the section. We listen on
-  // the whole section (not just the plane area) so the user surfs the projects
-  // regardless of where their cursor sits — no more accidentally scrolling past
-  // the carousel because the pointer was over the heading or section padding.
+  // Wheel surfs the planes; once we hit a bound, stop capturing so the page scrolls normally.
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;

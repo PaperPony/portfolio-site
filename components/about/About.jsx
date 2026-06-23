@@ -9,9 +9,6 @@ export default function About() {
       id="about"
       className="relative border-t border-white/10 bg-coal px-6 py-20 sm:py-24"
     >
-      {/* items-center balances the columns. Safe now that the text uses
-          reserveSpace (its box no longer reflows during scramble) and the
-          portrait reveal is scroll- rather than cursor-driven. */}
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">
         {/* Portrait — monochrome until scrolled into view, then it warps into colour. */}
         <Reveal className="order-1 md:order-none">

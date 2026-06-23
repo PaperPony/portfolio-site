@@ -11,21 +11,16 @@ import { usePointerPosition } from "motion-plus/react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
 /*
- * Aurora cursor trail. Adapted from Motion's cursor-trail example
- * (motion.dev/examples/react-cursor-trail): instead of dropping images along
- * the pointer path, it drops faint, heavily-blurred neon puffs that bloom in
- * and fade out, cycling the same palette as the hero aurora. Screen blend over
- * the dark page makes them read as soft light rather than solid discs — present
- * enough to notice, quiet enough not to fight the content.
+ * Aurora cursor trail. Adapted from Motion's cursor-trail example (motion.dev/examples/react-cursor-trail)
  */
 
-// Neon palette, kept in sync with the aurora shader / Tailwind tokens.
+// Neon palette: lime → cobalt → purple → magenta → ember
 const COLORS = ["#aaff00", "#3a86ff", "#9d4edd", "#ff2d95", "#ff5e1a"];
 
 const BLOB_SIZE = 140; // diameter of each puff before blur (px)
 const SPAWN_DISTANCE = 80; // cursor travel between spawns (px)
 const FADE_DURATION = 1.5; // seconds a puff lingers before removal
-const PEAK_OPACITY = 0.42; // faint, but visible against the dark page
+const PEAK_OPACITY = 0.42;
 
 export default function CursorTrail() {
   const reducedMotion = useReducedMotion();

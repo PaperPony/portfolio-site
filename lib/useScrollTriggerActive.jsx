@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 
-// Shared scroll-direction tracker — one window listener for every instance on
-// the page (there can be many), rather than one listener each.
+// Shared scroll-direction tracker
 let scrollDir = "down";
 let scrollLastY = 0;
 let scrollListening = false;

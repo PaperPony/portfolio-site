@@ -24,13 +24,11 @@ export const DEFAULTS = {
   speed: 0.5, // how fast the curtains shift/transform
   scale: 1.0, // horizontal frequency of the curtains (higher = more, thinner)
   intensity: 1.35, // overall brightness multiplier
-  bandLow: 0.04, // bottom of the aurora band (0 = screen bottom)
-  bandHigh: 0.95, // top of the aurora band (1 = screen top)
-  startDelay: 0.0, // seconds of black before the aurora begins to bloom
-  revealDuration: 4.0, // seconds for the bloom to fill the screen
-  // Neon palette (kept in sync with the CSS/Tailwind tokens).
-  // Order matters: low→high it reads lime → cobalt → purple → magenta, with
-  // ember reserved as a rare warm flare.
+  bandLow: 0.04,
+  bandHigh: 0.95,
+  startDelay: 0.0,
+  revealDuration: 4.0,
+  // Neon palette: lime → cobalt → purple → magenta → ember
   colors: ["#aaff00", "#3a86ff", "#9d4edd", "#ff2d95", "#ff5e1a"],
   // A static moment to render for reduced-motion users.
   reducedTime: 6.0,
@@ -104,20 +102,15 @@ const fragmentShader = /* glsl */ `
     return v;
   }
 
-  // One aurora "strand": a thin luminous filament traced from a flow-warped
-  // noise field, so it curves, leans and crosses other strands in any
-  // direction rather than hanging straight down.
+  // One aurora "strand": a thin luminous filament traced from a flow-warped noise field
   float curtain(vec2 uv, float t, float seed, float freq){
-    // Flowing 2D warp field. This bends the strands — diagonally, horizontally,
-    // in loops — and animates over time so they writhe and intermingle. Two
-    // incommensurate time drifts keep the motion from visibly looping.
+    // Flowing 2D warp field
     vec2 w = vec2(
       fbm(vec2(uv.x * 1.3 + seed,     uv.y * 1.0 - t * 0.18)),
       fbm(vec2(uv.x * 1.0 - t * 0.13, uv.y * 1.3 + seed * 1.7))
     );
 
-    // Only a mild vertical stretch keeps an aurora feel; the warp dominates
-    // the direction, so filaments wander instead of standing vertical.
+    // Only a mild vertical stretch keeps an aurora feel; the warp dominates the direction
     vec2 p = vec2(uv.x * freq, uv.y * freq * 0.65) + w * 2.2;
 
     float d = fbm(p + vec2(t * 0.12 + seed, -t * 0.05));
@@ -127,11 +120,10 @@ const fragmentShader = /* glsl */ `
     float band = smoothstep(0.52, 0.72, d) - smoothstep(0.72, 0.95, d);
     band = max(band, 0.0);
 
-    // Fine striations that follow the warped flow (not strictly vertical).
+    // Fine striations that follow the warped flow.
     float striae = 0.6 + 0.4 * (fbm(p * 2.3 + w) * 0.5 + 0.5);
 
-    // Large-scale gating: bright here, dark there, drifting — an irregular,
-    // patchy aurora rather than a tiled pattern.
+    // Large-scale gating
     float regional = fbm(vec2(uv.x * 0.5 - t * 0.03, uv.y * 0.4 + seed * 3.0)) * 0.5 + 0.5;
 
     return band * striae * (0.35 + 0.9 * regional);
@@ -143,8 +135,7 @@ const fragmentShader = /* glsl */ `
     return smoothstep(0.4, 0.0, abs(x));
   }
 
-  // Cyclic ramp across the 5 palette colors. No fixed start/end, no dynamic
-  // array indexing — feed it a drifting value and the color keeps cycling.
+  // Cyclic ramp across the 5 palette colors
   vec3 palette(float h){
     h = fract(h);
     float w0 = hueBump(h - 0.0);
@@ -171,17 +162,10 @@ const fragmentShader = /* glsl */ `
     float c1 = curtain(uv, t, 12.3, 4.6 * s);
     float c2 = curtain(uv, t, 27.7, 6.4 * s);
 
-    // Luminance = the ray / filament STRUCTURE. Sum the strand layers into one
-    // brightness field; overlapping strands just get brighter, they don't fight
-    // over color.
+    // Luminance = the ray / filament structure.
     float lum = c0 * 1.15 + c1 * 0.90 + c2 * 0.60;
 
-    // Color = large, smoothly-varying ZONES. A single low-frequency field (much
-    // coarser than the strands) sets the palette position, so a whole region
-    // shares one coherent hue — distinct green / pink / purple zones that blend
-    // softly at their edges, like a real aurora — instead of each strand
-    // tinting separately and muddying where they cross. The field drifts in
-    // space and time, so the zones keep shifting and re-coloring.
+    // Color = large, smoothly-varying zones.
     float hue = fbm(vec2(uv.x * 0.55 + t * 0.04, uv.y * 0.35 - t * 0.03)) * 0.85
               + t * 0.04;
 
@@ -195,9 +179,7 @@ const fragmentShader = /* glsl */ `
     // Soft tone-map so bright crests bloom instead of clipping harshly.
     col = col / (1.0 + col * 0.6);
 
-    // Reveal: bloom outward from a single point (center of the band). A soft
-    // expanding disc, plus an extra brightness lift right at the wavefront so
-    // it reads as light spreading rather than a wipe.
+    // Reveal: bloom outward from a single point (center of the band).
     vec2 origin = vec2(0.5, mix(uBandLow, uBandHigh, 0.5));
     float dist = length(vec2((vUv.x - origin.x) * aspect, vUv.y - origin.y));
     float radius = uReveal * 1.5;
@@ -254,7 +236,6 @@ function Aurora({ config, reducedMotion, active }) {
     u.uResolution.value.set(size.width * dpr, size.height * dpr);
 
     if (reducedMotion) {
-      // No motion, no bloom — show the settled aurora immediately.
       u.uTime.value = config.reducedTime;
       u.uReveal.value = 1;
       return;
@@ -314,15 +295,9 @@ export default function AuroraScene({
   return (
     <Canvas
       className="!absolute inset-0"
-      // Render only when we explicitly ask (see the driver in <Aurora/>), never
-      // on a free-running rAF loop.
       frameloop="demand"
-      // A fullscreen quad has no geometry edges, so MSAA is wasted work. And the
-      // 16px liquid-glass blur destroys any sub-pixel detail, so rendering above
-      // dpr 1 pays 4× on retina for sharpness the user can never see.
       gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
       dpr={1}
-      // No camera work needed — the quad is drawn directly in clip space.
     >
       <Aurora config={config} reducedMotion={reducedMotion} active={active} />
     </Canvas>

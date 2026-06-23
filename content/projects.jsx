@@ -1,6 +1,5 @@
 // Portfolio projects. Add an entry here and it shows up in the grid.
 // `accent` must be one of the neon palette keys: magenta | purple | cobalt | ember | lime
-// TODO: replace placeholders with real projects + images in /public/projects.
 export const projects = [
   {
     title: "Decorz",

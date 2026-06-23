@@ -22,16 +22,6 @@ const SHIMMER_TO =
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/**
- * Portrait that lives in monochrome until it's scrolled into view (reading down
- * the page), then ripples into colour — the same scroll trigger that drives the
- * scramble text, via useScrollTriggerActive. Scrolling back up past it drains
- * the colour again, so a later downward pass replays the reveal.
- *
- * The reveal is adapted from Motion's "Apple Intelligence" example: the colour
- * layer is unmasked via an animated radial sweep, and a tinted, colour-dodge
- * clone flashes across once on enter.
- */
 export default function PortraitReveal({ src, alt, className = "" }) {
   const reducedMotion = useReducedMotion();
   const [ref, active] = useScrollTriggerActive({ amount: 0.4 });
@@ -39,8 +29,6 @@ export default function PortraitReveal({ src, alt, className = "" }) {
   const colorRef = useRef(null);
   const shimmerRef = useRef(null);
   const colorAnimRef = useRef(null);
-  // Skip the drain on first mount: the colour layer already starts hidden, so
-  // there's nothing to drain until it has actually been revealed once.
   const revealedOnce = useRef(false);
 
   const revealColor = () => {
@@ -73,7 +61,7 @@ export default function PortraitReveal({ src, alt, className = "" }) {
     );
   };
 
-  // One-shot shimmer sweep — the Apple Intelligence ripple flash.
+  // One-shot shimmer sweep: the Apple Intelligence ripple flash.
   const shimmer = () => {
     const el = shimmerRef.current;
     if (!el || reducedMotion) return;
