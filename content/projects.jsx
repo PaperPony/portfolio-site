@@ -36,7 +36,7 @@ export const projects = [
   {
     title: "Solidif.ai",
     blurb:
-      "A SaaS platform to helps creators, writers, and small businesses optimize thier content for AI searches.",
+      "A SaaS platform to helps creators, writers, and small businesses optimize their content for AI searches.",
     tags: ["Next.js", "AWS", "Cohere", "Stripe", "Vercel"],
     accent: "cobalt",
     image: "/projects/solidifai.webp",
