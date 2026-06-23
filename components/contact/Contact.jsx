@@ -18,11 +18,13 @@ export default function Contact() {
       <Reveal className="relative mx-auto max-w-2xl text-center">
         <ScrambleText
           as="h2"
+          reserveSpace
           text="Want to build something?"
           className="mt-3 block text-4xl font-bold tracking-tight text-bone sm:text-6xl"
         />
         <ScrambleText
           as="p"
+          reserveSpace
           text="Shoot me an email and let's plan a call."
           className="mx-auto mt-5 block max-w-xl text-lg text-ash"
         />
