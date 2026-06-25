@@ -32,7 +32,7 @@ export const statusSchedule = {
     { days: MON, from: 11, to: 12.25, label: "Coaching Call", detail: "Weekly Mindset Training", accent: "magenta" },
     { days: MON, from: 19, to: 21, label: "Group Study", detail: "", accent: "purple" },
     { days: WED, from: 19, to: 21, label: "Friends Night", detail: "Weekly meetup", accent: "lime" },
-    { days: THU, from: 18.5, to: 21.5, label: "Best Friend", detail: "Catching up", accent: "ember" },
+    { days: THU, from: 18.5, to: 21.5, label: "With My Best Friend", detail: "Catching up", accent: "ember" },
     { days: SAT, from: 6, to: 8.5, label: "Journaling", detail: "And drinking coffee. I love coffee.", accent: "ember" },
     { days: SUN, from: 6, to: 9, label: "Journaling", detail: "And drinking coffee. I love coffee.", accent: "ember" },
     { days: SUN, from: 9, to: 12.5, label: "At Church", detail: "", accent: "cobalt" },
