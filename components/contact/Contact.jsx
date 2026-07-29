@@ -25,7 +25,7 @@ export default function Contact() {
         <ScrambleText
           as="p"
           reserveSpace
-          text="Shoot me an email and let's plan a call."
+          text="Book a call or shoot me an email — let's build something together."
           className="mx-auto mt-5 block max-w-xl text-lg text-ash"
         />
 
@@ -36,6 +36,18 @@ export default function Contact() {
           <ScrambleText text="Email me" />
           <span aria-hidden>→</span>
         </a>
+
+        <div className="mt-4">
+          <a
+            href="https://cal.com/dominickvarano/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-base font-semibold text-bone transition hover:border-neon-magenta hover:text-neon-magenta"
+          >
+            <ScrambleText text="Book a call" />
+            <span aria-hidden>→</span>
+          </a>
+        </div>
 
         <p className="mt-6 text-sm text-ash">
           <ScrambleText text="or reach me directly at" />{" "}
