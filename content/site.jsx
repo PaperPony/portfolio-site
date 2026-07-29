@@ -7,6 +7,7 @@ export const site = {
   intro:
     "Independent developer helping business owners build quality applications",
   email: "varano.dominick@gmail.com",
+  calLink: "https://cal.com/dominick-varano/30min",
   domain: "dominickvarano.io",
   url: "https://dominickvarano.io",
   // Used for absolute OG/canonical URLs and metadata.

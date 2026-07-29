@@ -25,15 +25,17 @@ export default function Contact() {
         <ScrambleText
           as="p"
           reserveSpace
-          text="Shoot me an email and let's plan a call."
+          text="Book a call or shoot me an email."
           className="mx-auto mt-5 block max-w-xl text-lg text-ash"
         />
 
         <a
-          href={`mailto:${site.email}`}
+          href={site.calLink}
+          target="_blank"
+          rel="noopener noreferrer"
           className="mt-10 inline-flex items-center gap-2 rounded-full bg-neon-magenta px-8 py-4 text-base font-semibold text-ink shadow-[0_0_40px_-8px_#ff2d95] transition hover:brightness-110"
         >
-          <ScrambleText text="Email me" />
+          <ScrambleText text="Book a call" />
           <span aria-hidden>→</span>
         </a>
 
