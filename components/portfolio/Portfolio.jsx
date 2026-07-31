@@ -1,6 +1,6 @@
 import Reveal from "@/components/ui/Reveal";
 import ScrambleText from "@/components/ui/ScrambleText";
-import ProjectCarousel from "@/components/portfolio/ProjectCarousel";
+import ProjectStack from "@/components/portfolio/ProjectStack";
 
 export default function Portfolio() {
   return (
@@ -22,7 +22,7 @@ export default function Portfolio() {
           />
         </Reveal>
 
-        <ProjectCarousel />
+        <ProjectStack />
       </div>
     </section>
   );
