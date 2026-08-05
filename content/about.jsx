@@ -5,7 +5,7 @@ export const about = {
   heading: "Full-stack development across web, mobile, and AI",
   paragraphs: [
     "Dominick Varano is a full-stack engineer who builds web apps, mobile apps, and AI systems. He handles the whole build himself, from the backend to the interfaces people actually use, so nothing gets lost between specialists.",
-    "He's currently taking on a small number of consulting clients. If you need technical aptitude, get in touch here.",
+    "He's currently taking on a small number of consulting clients. If you need technical aptitude, get in touch below.",
   ],
   highlights: [
     { label: "Technologies", detail: "Next.js, React, Firebase, AWS, Docker" },
