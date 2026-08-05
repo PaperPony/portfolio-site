@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { stagger } from "motion/react";
 import { ScrambleText as MotionScrambleText } from "motion-plus/react";
 import { useScrollTriggerActive } from "@/lib/useScrollTriggerActive";
@@ -26,13 +27,21 @@ export default function ScrambleText({
   delay, // per-character start offset
   chars = SCRAMBLE_CHARS,
   reserveSpace = false, // hold a stable box so scramble re-wrapping can't shift layout
+  playOnMount = false, // scramble as soon as it mounts, ignoring the scroll gate
   ...motionProps
 }) {
-  const [ref, active] = useScrollTriggerActive({ amount });
+  const [ref, scrolledInto] = useScrollTriggerActive({ amount });
+  // Text that only appears on interaction (an opening FAQ answer) is never
+  // "scrolled into" — it arrives already in view, so it plays on mount instead.
+  const active = playOnMount || scrolledInto;
 
-  // Left-to-right wave
-  const resolvedDelay =
-    delay ?? stagger(SWEEP_SPAN / Math.max(text.length, 1));
+  // Left-to-right wave. Memoised because motion-plus keys its animation effect on
+  // `delay` by identity — a fresh stagger() each render would replay the scramble
+  // on every unrelated parent re-render (e.g. opening an FAQ accordion).
+  const resolvedDelay = useMemo(
+    () => delay ?? stagger(SWEEP_SPAN / Math.max(text.length, 1)),
+    [delay, text.length]
+  );
 
   // Reserve-space mode: a proportional font means scrambled glyphs have varying
   // widths, so the text can re-wrap mid-animation and change height — which

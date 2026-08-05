@@ -27,7 +27,7 @@ export const projects = [
   {
     title: "Lunchbox",
     blurb:
-      "A shared lunch planner for families, currently in development. Parents create or join a family and use a real-time calendar to coordinate meal packing for their  kids. Snap a photo and an AI scanner auto-fills the items.",
+      "A shared lunch planner for families, currently in development. Parents create or join a family and use a live calendar to coordinate meal packing for their kids. Snap a photo and an AI scanner auto-fills the items.",
     tags: ["Swift", "Firebase", "OpenAI"],
     accent: "purple",
     image: "/projects/lunchbox.webp",
@@ -36,7 +36,7 @@ export const projects = [
   {
     title: "Solidif.ai",
     blurb:
-      "A SaaS platform to helps creators, writers, and small businesses optimize their content for AI searches.",
+      "A SaaS platform that helps creators, writers, and small businesses optimize their content for AI searches.",
     tags: ["Next.js", "AWS", "Cohere", "Stripe", "Vercel"],
     accent: "cobalt",
     image: "/projects/solidifai.webp",

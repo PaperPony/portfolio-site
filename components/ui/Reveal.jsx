@@ -3,9 +3,10 @@
 import { motion } from "motion/react";
 
 // Small helper: fade + rise into view when scrolled to
-export default function Reveal({ children, delay = 0, className = "" }) {
+export default function Reveal({ children, delay = 0, className = "", ...rest }) {
   return (
     <motion.div
+      {...rest}
       className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}

@@ -1,4 +1,4 @@
-import { Hero, StatusBar, Portfolio, About, Contact, CursorTrail } from "@/components";
+import { Hero, StatusBar, Portfolio, About, Faq, Contact, CursorTrail } from "@/components";
 
 export default function Home() {
   return (
@@ -18,7 +18,10 @@ export default function Home() {
       {/* 3. Portfolio. */}
       <Portfolio />
 
-      {/* 4. Contact. */}
+      {/* 4. FAQ. */}
+      <Faq />
+
+      {/* 5. Contact. */}
       <Contact />
     </main>
   );

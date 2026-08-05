@@ -15,11 +15,13 @@ export default function Contact() {
       {/* Idle glyphs orbiting clockwise along two side arcs (parentheses). */}
       <ContactOrbit />
 
-      <Reveal className="relative mx-auto max-w-2xl text-center">
+      {/* data-orbit-* mark what ContactOrbit measures: the column it must stay
+          clear of, and the CTA it centres itself on. */}
+      <Reveal data-orbit-column className="relative mx-auto max-w-2xl text-center">
         <ScrambleText
           as="h2"
           reserveSpace
-          text="Want to build something?"
+          text="Need technical expertise?"
           className="mt-3 block text-4xl font-bold tracking-tight text-bone sm:text-6xl"
         />
         <ScrambleText
@@ -30,6 +32,7 @@ export default function Contact() {
         />
 
         <a
+          data-orbit-center
           href={site.calLink}
           target="_blank"
           rel="noopener noreferrer"

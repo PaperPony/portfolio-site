@@ -5,7 +5,7 @@ export const site = {
   role: "Web · Mobile · AI",
   tagline: "I build full-stack apps and AI systems.",
   intro:
-    "Independent developer helping business owners build quality applications",
+    "Independent full-stack developer building web apps, mobile apps, and AI systems",
   email: "varano.dominick@gmail.com",
   calLink: "https://cal.com/dominick-varano/30min",
   domain: "dominickvarano.io",
@@ -13,9 +13,11 @@ export const site = {
   // Used for absolute OG/canonical URLs and metadata.
   ogImage: "/og.svg",
   social: [
-    // TODO: add real profiles
-    { label: "GitHub", href: "https://github.com/" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
+    { label: "GitHub", href: "https://github.com/PaperPony" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/dominick-varano-software-engineer",
+    },
   ],
 };
 

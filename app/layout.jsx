@@ -1,5 +1,6 @@
 import "./globals.css";
 import { site } from "@/content/site";
+import { buildJsonLd } from "@/content/jsonld";
 
 export const metadata = {
   metadataBase: new URL(site.url),
@@ -35,9 +36,19 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
+  const jsonLd = buildJsonLd();
+
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {/* Server-rendered entity graph (Person/Org/Service/WebSite/FAQPage) for AEO/GEO. */}
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
