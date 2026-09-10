@@ -1,4 +1,5 @@
 import path from "node:path";
+import { withSentryConfig } from "@sentry/nextjs/config";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -24,4 +25,20 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+// Wraps the config with Sentry: injects instrumentation, handles sourcemaps.
+// When SENTRY_AUTH_TOKEN is absent (local dev / CI without secrets), all
+// upload behavior is disabled and the wrapper is a no-op.
+const sentryOptions = {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  // Upload wider set of client source files for better stack trace resolution
+  widenClientFileUpload: true,
+  // Proxy API route so ad-blockers don't drop browser events
+  tunnelRoute: "/monitoring",
+  silent: !process.env.CI,
+  sourcemaps: { disable: !process.env.SENTRY_AUTH_TOKEN },
+  disable: !process.env.SENTRY_AUTH_TOKEN,
+};
+
+export default withSentryConfig(nextConfig, sentryOptions);
