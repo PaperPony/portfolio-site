@@ -1,6 +1,7 @@
 import "./globals.css";
 import { site } from "@/content/site";
 import { buildJsonLd } from "@/content/jsonld";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   metadataBase: new URL(site.url),
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        <Analytics />
       </body>
     </html>
   );
