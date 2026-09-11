@@ -10,7 +10,7 @@ export const site = {
   domain: "dominickvarano.io",
   url: "https://www.dominickvarano.io",
   // Used for absolute OG/canonical URLs and metadata.
-  ogImage: "/og.svg",
+  ogImage: "/og.png",
   social: [
     { label: "GitHub", href: "https://github.com/PaperPony" },
     {
