@@ -13,6 +13,14 @@ export const metadata = {
   alternates: {
     canonical: "/",
   },
+  // index/follow are already the defaults; the preview and snippet directives are
+  // the part that changes search behavior (larger image previews, no snippet cap).
+  robots: {
+    index: true,
+    follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+  },
   openGraph: {
     type: "website",
     url: site.url,
